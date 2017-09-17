@@ -57,7 +57,6 @@ const CardList = (props) => {
 }
 
 class AddUser extends React.Component {
-  
   handleClick = () => {
     this.setState(() => (
       this.props.fetchData(this.props.username)
@@ -91,9 +90,13 @@ class App extends React.Component {
     fetch(`https://api.github.com/users/${username}`)
       .then((res) => res.json())
       .then((user) => {
-        const users = this.state.users.concat([user])
-        this.setState({ users })
-      })
+        if (user.message !== "Not Found"){
+          const users = this.state.users.concat([user])
+          this.setState({ users })
+        } else {
+          alert(user.message)
+        }
+      })  
   }
   
   onChange = (evt) => {
